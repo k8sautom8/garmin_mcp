@@ -104,11 +104,18 @@ This document lists all MCP tools available in the Garmin MCP Server.
 - `get_menstrual_data_for_date(date: str)` - Get menstrual data for a specific date
 - `get_menstrual_calendar_data(start_date: str, end_date: str)` - Get menstrual calendar data between dates
 
-## Recommendations (2 tools)
+## Recommendations (8 tools)
 - `get_optimized_health_data(start_date: str, end_date: str, include_activities: bool = True, include_sleep: bool = True, include_stress: bool = True, include_body_battery: bool = True, include_training_readiness: bool = True, include_hrv: bool = False, activity_type: str = "")` - Optimized tool to fetch multiple health and training data points in one call, reducing the need for multiple individual tool calls
 - `get_training_and_diet_recommendations(context: str, health_data_json: Optional[str] = None, start_date: Optional[str] = None, end_date: Optional[str] = None, focus_area: Optional[str] = None)` - Generate personalized training and diet recommendations based on recent health and training data, with context-aware suggestions
+- `get_period_summary(period: str, anchor_date: Optional[str] = None, include_activities: bool = True, include_sleep: bool = True, include_stress: bool = True, include_body_battery: bool = True, include_training_readiness: bool = True, include_hrv: bool = False, include_stats: bool = True, activity_type: str = "")` - Single-pane summary for daily/weekly/monthly with aggregates and per-day details (accepts anchor phrases like "last week", "this month")
+- `get_trends(start_date: str, end_date: str, include: Optional[List[str]] = None)` - Trends with 7/28-day rolling averages and start→end deltas for selected metrics (start/end may be relative phrases such as "last 28 days")
+- `detect_anomalies(start_date: str, end_date: str, rhr_bpm_increase: int = 5, hrv_ms_drop: int = 15, sleep_hours_min: float = 6.0, steps_drop_pct: float = 30.0)` - Heuristic anomaly detection for recovery red flags (range accepts relative phrases)
+- `get_readiness_breakdown(date: str)` - Component scores (sleep, body battery, HRV, stress inverse) and combined readiness score (0–100) for a date or relative phrase (e.g., "today", "last week")
+- `get_data_completeness(start_date: str, end_date: str)` - Per-day completeness and overall score across key signals (sleep, steps, HR, HRV, body battery) with support for relative ranges
+- `get_hydration_guidance(weight_kg: float, training_minutes: int = 0, temperature_c: Optional[float] = None)` - Daily hydration target (ml) with baseline, training increment, and heat multiplier
+- `get_coach_cues(period: str, anchor_date: Optional[str] = None)` - Concise coach guidance for daily/weekly/monthly periods using high-signal metrics
 
-## Total: 72 MCP Tools
+## Total: 78 MCP Tools
 
 **Note:** Date parameters should be in `YYYY-MM-DD` format. Some tools may require specific Garmin device features or subscription levels to return data.
 

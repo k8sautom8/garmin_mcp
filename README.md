@@ -2,9 +2,11 @@
 
 This Model Context Protocol (MCP) server connects to Garmin Connect and exposes your fitness and health data to OpenWebUI, Claude or any other MCP-compatible clients via Streamable HTTP transport.
 
+Credits: https://github.com/Taxuspt/garmin_mcp
+
 ## Features
 
-- **72+ MCP Tools** covering:
+- **78+ MCP Tools** covering:
   - Activity management (list, get details, splits, weather, gear)
   - Health & wellness metrics (steps, heart rate, sleep, stress, body battery)
   - Training & performance data (VO2 Max, HRV, training effect, fitness age)
@@ -427,7 +429,7 @@ kubectl logs -n mcpo deployment/garmin-mcp -f
 
 ## Available Tools
 
-This server provides 70+ MCP tools. See [TOOLS.md](TOOLS.md) for a complete list organised by category.
+This server provides 78+ MCP tools. See [TOOLS.md](TOOLS.md) for a complete list organised by category.
 
 ## Example Queries
 
@@ -575,6 +577,34 @@ The MCP server can handle complex, multi-step queries:
   
 - **"Give me a complete health summary for November 6th: steps, sleep, stress, heart rate, and body battery"**
   - Combines: `get_steps_data`, `get_sleep_data`, `get_stress_data`, `get_heart_rates`, `get_body_battery`
+
+### One‑Pane Summaries and Insights
+
+- **"Show my weekly single-pane summary for last week"**
+  - Uses: `get_period_summary` with period="weekly", anchor_date="last week"
+  
+- **"Fetch a monthly dashboard summary including activities and readiness"**
+  - Uses: `get_period_summary` with period="monthly"
+  
+- **"What are my trends over the last 4 weeks?"**
+  - Uses: `get_trends` with start_date, end_date, include=["rhr","hrv","sleep","steps","body_battery"]
+  
+- **"Detect any recovery red flags this week"**
+  - Uses: `detect_anomalies` with heuristic thresholds (defaults sensible)
+  
+- **"Give me a readiness breakdown for today"**
+  - Uses: `get_readiness_breakdown`
+  
+- **"How complete is my data this month?"**
+  - Uses: `get_data_completeness`
+  
+- **"Hydration target for a 60‑minute run at 28°C, weight 75 kg"**
+  - Uses: `get_hydration_guidance` with weight_kg=75, training_minutes=60, temperature_c=28
+  
+- **"Coach cues for this week"**
+  - Uses: `get_coach_cues` with period="weekly"
+
+> Tip: These tools accept natural timeframe phrases like `today`, `yesterday`, `last week`, `this week`, `last month`, `last 28 days`. Ranges automatically clamp to today so mid-week requests never reach into the future.
 
 ### Accessing the Server
 
